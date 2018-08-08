@@ -1,0 +1,11 @@
+C:\Users\i343817\Desktop\Exercise\TreeExercise\bin\Debug\netcoreapp2.1\TreeExercise.deps.json
+C:\Users\i343817\Desktop\Exercise\TreeExercise\bin\Debug\netcoreapp2.1\TreeExercise.runtimeconfig.json
+C:\Users\i343817\Desktop\Exercise\TreeExercise\bin\Debug\netcoreapp2.1\TreeExercise.runtimeconfig.dev.json
+C:\Users\i343817\Desktop\Exercise\TreeExercise\bin\Debug\netcoreapp2.1\TreeExercise.dll
+C:\Users\i343817\Desktop\Exercise\TreeExercise\bin\Debug\netcoreapp2.1\TreeExercise.pdb
+C:\Users\i343817\Desktop\Exercise\TreeExercise\obj\Debug\netcoreapp2.1\TreeExercise.csprojAssemblyReference.cache
+C:\Users\i343817\Desktop\Exercise\TreeExercise\obj\Debug\netcoreapp2.1\TreeExercise.csproj.CoreCompileInputs.cache
+C:\Users\i343817\Desktop\Exercise\TreeExercise\obj\Debug\netcoreapp2.1\TreeExercise.AssemblyInfoInputs.cache
+C:\Users\i343817\Desktop\Exercise\TreeExercise\obj\Debug\netcoreapp2.1\TreeExercise.AssemblyInfo.cs
+C:\Users\i343817\Desktop\Exercise\TreeExercise\obj\Debug\netcoreapp2.1\TreeExercise.dll
+C:\Users\i343817\Desktop\Exercise\TreeExercise\obj\Debug\netcoreapp2.1\TreeExercise.pdb

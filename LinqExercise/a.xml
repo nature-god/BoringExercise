@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bookstore>
+    <!--document the information of books-->
+    <book Type="mandatory" ISBN="7-111-19149-2">
+        <title>Data Construc</title>
+        <author>Nature</author>
+        <price>30.00</price>
+    </book>
+
+    <book Type="mandatory" ISBN="7-111-1914993">
+        <title>The Basic of Router and Translation Network</title>
+        <author>Bob</author>
+        <price>29.00</price>
+    </book>
+
+    <book Type="mandatory" ISBN="7-111-1914994">
+        <title>The Computer hardware base</title>
+        <author>Marry</author>
+        <price>38.00</price>
+    </book>
+
+    <book Type="mandatory" ISBN="7-111-1914995">
+        <title>Algorithm Design and Analysis</title>
+        <author>Cherry</author>
+        <price>23.00</price>
+    </book>
+
+    <book Type="mandatory" ISBN="7-111-1914996">
+        <title>Software qulity and Guarantee</title>
+        <author>SKR</author>
+        <price>41.00</price>
+    </book>
+
+    <book Type="optional" ISBN="7-111-1914997">
+        <title>Computer Operation System</title>
+        <author>GAKKI</author>
+        <price>56.00</price>
+    </book>
+</bookstore>

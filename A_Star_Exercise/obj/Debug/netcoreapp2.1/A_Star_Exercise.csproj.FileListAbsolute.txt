@@ -1,0 +1,11 @@
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\bin\Debug\netcoreapp2.1\A_Star_Exercise.deps.json
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\bin\Debug\netcoreapp2.1\A_Star_Exercise.runtimeconfig.json
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\bin\Debug\netcoreapp2.1\A_Star_Exercise.runtimeconfig.dev.json
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\bin\Debug\netcoreapp2.1\A_Star_Exercise.dll
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\bin\Debug\netcoreapp2.1\A_Star_Exercise.pdb
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\obj\Debug\netcoreapp2.1\A_Star_Exercise.csprojAssemblyReference.cache
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\obj\Debug\netcoreapp2.1\A_Star_Exercise.csproj.CoreCompileInputs.cache
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\obj\Debug\netcoreapp2.1\A_Star_Exercise.AssemblyInfoInputs.cache
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\obj\Debug\netcoreapp2.1\A_Star_Exercise.AssemblyInfo.cs
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\obj\Debug\netcoreapp2.1\A_Star_Exercise.dll
+C:\Users\i343817\Desktop\Exercise\A_Star_Exercise\obj\Debug\netcoreapp2.1\A_Star_Exercise.pdb
