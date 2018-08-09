@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ItemClassDesign;
 
-namespace ClassDesign
+namespace PlayerClassDesign
 {
     public enum SEX
     {
@@ -130,6 +131,13 @@ namespace ClassDesign
         {
             
         }
+
+        public IList<Item> items = new List<Item>();
+
+        public void UseItem(Item item)
+        {
+            item.UseItem();
+        }
     }
 
     class Dragon : Role
@@ -217,27 +225,6 @@ namespace ClassDesign
         public string PhysicalDescription()
         {
             return SkillName;
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Player player = new Player("Nature",SEX.Man,1,10,10,100,10,100);
-
-            PhysicalSkill_01 tmp1 = new PhysicalSkill_01("小刀突击",10,1);
-            PhysicalSkill_01 tmp2 = new PhysicalSkill_01("酒鬼战意",6,1);
-            PhysicalSkill_01 tmp3 = new PhysicalSkill_01("小刀暴击",15,1);
-
-            player.Skills.Add(tmp1);
-            player.Skills.Add(tmp2);
-            player.Skills.Add(tmp3);
-            //Console.WriteLine(player.Skills.Count.ToString());
-            foreach(PhysicalSkill_01 t in player.Skills)
-            {
-                player.UseSkill(t);
-            }
         }
     }
 }

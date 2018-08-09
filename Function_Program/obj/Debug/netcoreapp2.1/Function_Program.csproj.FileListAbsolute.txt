@@ -1,0 +1,11 @@
+C:\Users\i343817\Desktop\Exercise\Function_Program\bin\Debug\netcoreapp2.1\Function_Program.deps.json
+C:\Users\i343817\Desktop\Exercise\Function_Program\bin\Debug\netcoreapp2.1\Function_Program.runtimeconfig.json
+C:\Users\i343817\Desktop\Exercise\Function_Program\bin\Debug\netcoreapp2.1\Function_Program.runtimeconfig.dev.json
+C:\Users\i343817\Desktop\Exercise\Function_Program\bin\Debug\netcoreapp2.1\Function_Program.dll
+C:\Users\i343817\Desktop\Exercise\Function_Program\bin\Debug\netcoreapp2.1\Function_Program.pdb
+C:\Users\i343817\Desktop\Exercise\Function_Program\obj\Debug\netcoreapp2.1\Function_Program.csprojAssemblyReference.cache
+C:\Users\i343817\Desktop\Exercise\Function_Program\obj\Debug\netcoreapp2.1\Function_Program.csproj.CoreCompileInputs.cache
+C:\Users\i343817\Desktop\Exercise\Function_Program\obj\Debug\netcoreapp2.1\Function_Program.AssemblyInfoInputs.cache
+C:\Users\i343817\Desktop\Exercise\Function_Program\obj\Debug\netcoreapp2.1\Function_Program.AssemblyInfo.cs
+C:\Users\i343817\Desktop\Exercise\Function_Program\obj\Debug\netcoreapp2.1\Function_Program.dll
+C:\Users\i343817\Desktop\Exercise\Function_Program\obj\Debug\netcoreapp2.1\Function_Program.pdb
