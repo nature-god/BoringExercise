@@ -4,6 +4,7 @@ using ItemClassDesign;
 using Items;
 using SkillClassDesign;
 using Skills;
+using System.Threading.Tasks;
 
 namespace Test
 {
@@ -12,6 +13,7 @@ namespace Test
         static void Main(string[] args)
         {
             Player player = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
+            Monster Gooo = new Monster("哥布林",SEX.Man,1,8,2,50,0,0,40,10,100);
 
             PhysicalSkill tmp1 = new PhysicalSkill("小刀突击",10,1);
             PhysicalSkill tmp2 = new PhysicalSkill("酒鬼战意",6,1);
@@ -46,16 +48,16 @@ namespace Test
                 player.UpgradeSkill(t);
             }
 
-            foreach(Item t in player.items)
+/*             foreach(Item t in player.items)
             {
                 player.UseItem(t);
-            }
+            } 
 
             player.Equip(Etmp1);
             player.Equip(Etmp2);
             player.Equip(Etmp3);
-            player.Equip(Etmp4);
-            //player.Equip(Etmp5);
+            player.Equip(Etmp4); 
+            player.Equip(Etmp5);  */
 
             Console.WriteLine("玩家装备:");
             Console.WriteLine("头部: "+player.Head.Name);
@@ -63,6 +65,26 @@ namespace Test
             Console.WriteLine("鞋子: "+player.Shoe.Name);
             Console.WriteLine("衣服: "+player.Cloth.Name);
             Console.WriteLine("护手: "+player.Handguard.Name);
+
+            while(!player.dead&&!Gooo.dead)
+                {
+                    if(!player.dead)
+                    {
+                        player.ATTACK(Gooo);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    if(!Gooo.dead)
+                    {
+                        Gooo.ATTACK(player);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
         }
     }
 }

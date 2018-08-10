@@ -32,7 +32,7 @@ namespace PlayerClassDesign
         //
         private int essence;
 
-
+        public bool dead = false;
         public IList<Skill> Skills = new List<Skill>();
         //Constructor
         public Role(string _name,SEX _sex,int _level,int _attack,int _defense,
@@ -81,7 +81,15 @@ namespace PlayerClassDesign
         public int Life
         {
             get{return life;}
-            set{life = value;}
+            set
+            {
+                life = value;
+                if(life <= 0)
+                {
+                    this.dead = true;
+                    Console.WriteLine(name+"死亡");
+                }
+            }
         }
         public int Magic_capacity
         {
@@ -114,6 +122,27 @@ namespace PlayerClassDesign
         public new string ToString()
         {
             return name;
+        }
+        public void ATTACK(Role role)
+        {
+            int hurt = 0;
+            int offset = new Random().Next(0,(((Hit-role.Dodge)>1)?(Hit-role.Dodge):0));
+            hurt = Attack - role.Defense + offset; 
+            if(hurt <= 0)
+            {
+                hurt = 1;
+            }
+            role.Life -= hurt;
+            #if DEBUG
+                Console.WriteLine("=========================");
+                if(offset >= (Hit-role.Dodge)/2)
+                {
+                    Console.WriteLine("暴击!");
+                }
+                Console.WriteLine(Name +"攻击"+role.name+"造成了" + hurt+"伤害");
+                Console.WriteLine(Name +"剩余生命："+life);
+                Console.WriteLine(role.name+"剩余生命"+role.life);
+            #endif
         }
         #endregion
     }
@@ -236,6 +265,26 @@ namespace PlayerClassDesign
                     loyalty = value;
                 }
             }
+        }
+    }
+    class Monster : Role
+    {
+        private int exercise;
+        public int Exercise
+        {
+            get{return exercise;}
+        }
+        public Monster(string _name,SEX _sex,
+                        int _level,int _attack,
+                        int _defense,int _life,
+                        int _magic_capacity,
+                        int _essence,
+                        int _hit,
+                        int _dodge,
+                        int _exercise):
+        base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence,_hit,_dodge)
+        {
+            exercise = _exercise;
         }
     }
 }
