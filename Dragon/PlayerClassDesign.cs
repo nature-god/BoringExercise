@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ItemClassDesign;
+using SkillClassDesign;
+using Items;
 
 namespace PlayerClassDesign
 {
@@ -10,28 +12,7 @@ namespace PlayerClassDesign
         Feman = 2,
         Midium = 3
     };
-
-    public interface IMagicalSkill
-    {
-        //Use the magic skill
-        void UseMagic();
-        //Upgrade the magic skill
-        void UpgradeMagic();
-        //Descriptions of the magic skill
-        string MagicDescription();
-    }
-
-    public interface IPhysicalSkill
-    {
-        //Use the physical skill
-        void UsePhsical();
-        //Upgrade the physical skill
-        void UpgradePhysical();
-        //Descriptions of the physical skill
-        string PhysicalDescription();
-    }
-
-
+    
     public class Role
     {
         private string name;
@@ -46,12 +27,16 @@ namespace PlayerClassDesign
         //Magic capacity
         private int magic_capacity;
         //
+        private int hit;
+        private int dodge;
+        //
         private int essence;
 
 
         public IList<Skill> Skills = new List<Skill>();
         //Constructor
-        public Role(string _name,SEX _sex,int _level,int _attack,int _defense,int _life,int _magic_capacity,int _essence)
+        public Role(string _name,SEX _sex,int _level,int _attack,int _defense,
+                    int _life,int _magic_capacity,int _essence,int _hit,int _dodge)
         {
             name = _name;
             sex = _sex;
@@ -61,6 +46,8 @@ namespace PlayerClassDesign
             life = _life;
             magic_capacity = _magic_capacity;
             essence = _essence;
+            hit = _hit;
+            dodge = _dodge;
         }
         
         #region Accessor
@@ -106,6 +93,17 @@ namespace PlayerClassDesign
             get{return essence;}
             set{essence = value;}
         }
+
+        public int Hit
+        {
+            get{return hit;}
+            set{hit = value;}
+        }
+        public int Dodge
+        {
+            get{return dodge;}
+            set{dodge = value;}
+        }
         #endregion
 
         #region  Method
@@ -126,17 +124,71 @@ namespace PlayerClassDesign
                         int _level,int _attack,
                         int _defense,int _life,
                         int _magic_capacity,
-                        int _essence):
-        base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence)
+                        int _essence,
+                        int _hit,
+                        int _dodge):
+        base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence,_hit,_dodge)
         {
-            
+            Head = new HeadEquipment();
+            Handguard = new HandguardEquipment();
+            Cloth = new ClothEquipment();
+            Shoe = new ShoeEquipment();
+            Weapon = new WeaponEquipment();
         }
 
+
         public IList<Item> items = new List<Item>();
+
+        public HeadEquipment Head;
+        public HandguardEquipment Handguard;
+        public ClothEquipment Cloth;
+        public ShoeEquipment Shoe;
+        public WeaponEquipment Weapon;
 
         public void UseItem(Item item)
         {
             item.UseItem();
+        }
+        public void UpgradeSkill(Skill skill)
+        {
+            skill.UpgradeSkill();
+        }
+        public void Equip(Equipment equipment)
+        {
+            equipment.Equip();
+            switch(equipment.GetType().ToString())
+            {
+                case "Items.HeadEquipment":
+                {
+                    Head = (HeadEquipment)equipment;
+                    break;
+                }
+                case "Items.ClothEquipment":
+                {
+                    Cloth = (ClothEquipment)equipment;
+                    break;
+                }
+                case "Items.WeaponEquipment":
+                {
+                    Weapon = (WeaponEquipment)equipment;
+                    break;
+                }
+                case "Items.HandguardEquipment":
+                {
+                    Handguard = (HandguardEquipment)equipment;
+                    break;
+                }
+                case "Items.ShoeEquipment":
+                {
+                    Shoe = (ShoeEquipment)equipment;
+                    break;
+                }
+                default:
+                {
+                    Console.WriteLine(equipment.GetType().ToString());
+                    break;
+                }
+            }
         }
     }
 
@@ -144,87 +196,46 @@ namespace PlayerClassDesign
     {
         //name,sex,level,attack,defense,life,magic_capacity,essence
         private int dragonType;
+        private int loyalty;
         public Dragon(string _name,SEX _sex,
                         int _level,int _attack,
                         int _defense,int _life,
                         int _magic_capacity,
                         int _essence,
-                        int _dragonType):
-        base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence)
+                        int _dragonType,
+                        int _loyalty,
+                        int _hit,
+                        int _dodge):
+        base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence,_hit,_dodge)
         {
             dragonType = _dragonType;
-        }
-    }
-
-    public abstract class Skill
-    {
-        enum Effect
-        {
-            dizziness = 1,
-            flame = 2,
-            frozen = 3,
-            poison = 4,
-            cure = 5,
-            blessing =6
-        }
-        private string skillName;
-        private int attack;
-        private int level;
-
-        public Skill(string _name,int _attack,int _level)
-        {
-            skillName = _name;
-            attack = _attack;
-            level = _level;
+            loyalty = _loyalty;
         }
 
-        public string SkillName
+        public int DragonType
         {
-            get{return skillName;}
-            set{skillName = value;}
+            //read only
+            get{return dragonType;}
         }
-
-        public int Attack
+        public int Loyalty
         {
-            get{return attack;}
-            set{attack = value;}
-        }
-
-        public int Level
-        {
-            get{return level;}
-            set{level = value;}
-        }
-
-        public abstract void UseSkill();
-    }
-
-    public class PhysicalSkill_01 : Skill,IPhysicalSkill
-    {
-
-        public PhysicalSkill_01(string _name,int _attack,int _level):base(_name,_attack,_level)
-        {
-            //Console.WriteLine("PhysicalSkill_01======");
-        }
-        //Use the physical skill
-        public override void UseSkill()
-        {
-            UsePhsical();
-        }
-        public void UsePhsical()
-        {
-            Console.WriteLine(PhysicalDescription() + "造成" + Attack + "伤害");
-        }
-        //Upgrade the physical skill
-        public void UpgradePhysical()
-        {
-            Attack += 5;
-            Console.WriteLine(PhysicalDescription() + "造成" + Attack + "伤害");
-        }
-        //Descriptions of the physical skill
-        public string PhysicalDescription()
-        {
-            return SkillName;
+            get{return loyalty;}
+            set
+            {
+                //loyalty: -100 -- 100
+                if(loyalty > 100)
+                {
+                    loyalty = 100;
+                }
+                else if(loyalty < -100)
+                {
+                    loyalty = -100;
+                }
+                else
+                {
+                    loyalty = value;
+                }
+            }
         }
     }
 }

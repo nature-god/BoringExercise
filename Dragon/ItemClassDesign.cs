@@ -1,14 +1,18 @@
 using System;
+using PlayerClassDesign;
 
 namespace ItemClassDesign
 {
     public abstract class Item
     {
+        //Reference no need to instantiation
+        public Role User;
         private string name;
 
-        public Item(string _name)
+        public Item(string _name,Role _User)
         {
             name = _name;
+            User = _User;
         }
 
         public string Name
@@ -21,27 +25,41 @@ namespace ItemClassDesign
         public abstract string Description();
     }
 
-    public class ResumeItem : Item
+    public abstract class Equipment
     {
-        private int resumCount;
-        public int ResumCount
+        public Equipment(){}
+        public Equipment(string _name,Role _role)
         {
-            get{return resumCount;}
-            set{resumCount = value;}
+            Name = _name;
+            User = _role;
         }
-        public ResumeItem(string _name,int _resumCount):base(_name)
+        public Role User;
+
+        private string name;
+        public string Name
         {
-            ResumCount = _resumCount;
+            get{return name;}
+            set{name = value;}
         }
 
-        public override void UseItem()
-        {
-            Console.WriteLine("使用"+Name+" ,回复"+resumCount.ToString()+"生命值");
-        }
+        public abstract void Equip();
+        public abstract string Description();
+    }
 
-        public override string Description()
-        {
-            return "回复";
-        }
+    public interface IAttackEnhance
+    {
+        void AttackEnhance();
+    }
+    public interface IDefenseEnhance
+    {
+        void DefenseEnhance();
+    }
+    public interface IHitEnhance
+    {
+        void HitEnhance();
+    }
+    public interface IDodgeEnhance
+    {
+        void DodgeEnhance();
     }
 }
