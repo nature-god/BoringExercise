@@ -1,15 +1,29 @@
 //#undef DEBUG
 using System;
 using SkillClassDesign;
+using System.Runtime.Serialization;
 
 namespace  Skills
 {
-    public class PhysicalSkill : Skill,IPhysicalSkill
+    public class PhysicalSkill : Skill,IPhysicalSkill,ISerializable
     {
+        protected PhysicalSkill(SerializationInfo info,StreamingContext context)
+        {
+            SkillName = info.GetString("SkillName");
+            Level = info.GetInt16("SkillLevel");
+            Attack = info.GetInt16("SkillAttack");
+        }
         public PhysicalSkill(string _name,int _attack,int _level):base(_name,_attack,_level)
         {
             //Console.WriteLine("PhysicalSkill_01======");
         }
+        public void GetObjectData(SerializationInfo info,StreamingContext context)
+        {
+            info.AddValue("SkillName",SkillName,typeof(string));
+            info.AddValue("SkillLevel",Level,typeof(int));
+            info.AddValue("SkillAttack",Attack,typeof(int));
+        }
+
         //Use the physical skill
         public override void UseSkill()
         {
@@ -42,11 +56,23 @@ namespace  Skills
         }
     }    
 
-    public class MagicalSkill : Skill,IMagicalSkill
+    public class MagicalSkill : Skill,IMagicalSkill,ISerializable
     {
+        protected MagicalSkill(SerializationInfo info,StreamingContext context)
+        {
+            SkillName = info.GetString("SkillName");
+            Level = info.GetInt16("SkillLevel");
+            Attack = info.GetInt16("SkillAttack");
+        }
         public MagicalSkill(string _name,int _attack,int _level):base(_name,_attack,_level)
         {
             //Console.WriteLine("PhysicalSkill_01======");
+        }
+        public void GetObjectData(SerializationInfo info,StreamingContext context)
+        {
+            info.AddValue("SkillName",SkillName,typeof(string));
+            info.AddValue("SkillLevel",Level,typeof(int));
+            info.AddValue("SkillAttack",Attack,typeof(int));
         }
         //Use the physical skill
         public override void UseSkill()

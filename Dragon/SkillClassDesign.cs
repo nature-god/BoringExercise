@@ -36,6 +36,10 @@ namespace SkillClassDesign
         private int attack;
         private int level;
 
+        public Skill()
+        {
+
+        }
         public Skill(string _name,int _attack,int _level)
         {
             skillName = _name;

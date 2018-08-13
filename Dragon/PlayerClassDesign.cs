@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using ItemClassDesign;
 using SkillClassDesign;
 using Items;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace PlayerClassDesign
 {
@@ -33,8 +35,23 @@ namespace PlayerClassDesign
         private int essence;
 
         public bool dead = false;
-        public IList<Skill> Skills = new List<Skill>();
+    
+        private IList<Skill> skills;
+        //For serialization Use function to get and set
+        public void SetSkills(IList<Skill> tmp)
+        {
+            skills = tmp;
+        }
+        public IList<Skill> GetSkills()
+        {
+            return skills;
+        }
+
         //Constructor
+        public Role()
+        {
+            skills = new List<Skill>();
+        }
         public Role(string _name,SEX _sex,int _level,int _attack,int _defense,
                     int _life,int _magic_capacity,int _essence,int _hit,int _dodge)
         {
@@ -48,6 +65,7 @@ namespace PlayerClassDesign
             essence = _essence;
             hit = _hit;
             dodge = _dodge;
+            skills = new List<Skill>();
         }
         
         #region Accessor
@@ -55,13 +73,13 @@ namespace PlayerClassDesign
         public string Name
         {
             get{return name;}
-            //set{name = value;}
+            set{name = value;}
         }
         //read only
         public SEX Sex
         {
             get{return sex;}
-            //set{sex = value;}
+            set{sex = value;}
         }
         public int Level
         {
@@ -121,7 +139,17 @@ namespace PlayerClassDesign
         }
         public new string ToString()
         {
-            return name;
+            string tmp = String.Empty;
+            tmp = "================\nPlayerInfo:\nName: "+Name
+                        +"\nLevel: "+Level
+                        +"\nSex: "+Sex
+                        +"\nLife: "+Life
+                        +"\nAttack: "+Attack
+                        +"\nDefense: "+Defense
+                        +"\nHit: "+Hit
+                        +"\nDodge: "+Dodge
+                        +"\nSkills: "+GetSkills().Count;
+            return tmp;
         }
         public void ATTACK(Role role)
         {
@@ -147,7 +175,8 @@ namespace PlayerClassDesign
         #endregion
     }
 
-    class Player : Role
+    [Serializable]
+    class Player : Role,ISerializable
     {
         public Player(string _name,SEX _sex,
                         int _level,int _attack,
@@ -158,21 +187,101 @@ namespace PlayerClassDesign
                         int _dodge):
         base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence,_hit,_dodge)
         {
-            Head = new HeadEquipment();
-            Handguard = new HandguardEquipment();
-            Cloth = new ClothEquipment();
-            Shoe = new ShoeEquipment();
-            Weapon = new WeaponEquipment();
+            head = new HeadEquipment();
+            handguard = new HandguardEquipment();
+            cloth = new ClothEquipment();
+            shoe = new ShoeEquipment();
+            weapon = new WeaponEquipment();
+            items = new List<Item>();
         }
 
+        protected Player(SerializationInfo info,StreamingContext context)
+        {
+            try
+            {
+                Name = info.GetString("Name");
+                Sex = (SEX)info.GetValue("Sex",typeof(SEX));
+                Life = info.GetInt16("Life");
+                Attack = info.GetInt16("Attack");
+                Defense = info.GetInt16("Defense");
+                Hit = info.GetInt16("Hit");
+                Dodge = info.GetInt16("Dodge");
 
-        public IList<Item> items = new List<Item>();
+                head = new HeadEquipment();
+                handguard = new HandguardEquipment();
+                cloth = new ClothEquipment();
+                shoe = new ShoeEquipment();
+                weapon = new WeaponEquipment();
+                items = new List<Item>();
 
-        public HeadEquipment Head;
-        public HandguardEquipment Handguard;
-        public ClothEquipment Cloth;
-        public ShoeEquipment Shoe;
-        public WeaponEquipment Weapon;
+                SetItems((List<Item>)info.GetValue("Items",typeof(List<Item>)));
+                SetSkills((IList<Skill>)info.GetValue("Skills",typeof(IList<Skill>)));
+                SetHead((HeadEquipment)info.GetValue("HeadEquipment",typeof(HeadEquipment)));
+                SetHandguard((HandguardEquipment)info.GetValue("HandguardEquipment",typeof(HandguardEquipment)));
+                SetCloth((ClothEquipment)info.GetValue("ClothEquipment",typeof(ClothEquipment)));
+                SetShoe((ShoeEquipment)info.GetValue("ShoeEquipment",typeof(ShoeEquipment)));
+                SetWeapon((WeaponEquipment)info.GetValue("Weapon",typeof(WeaponEquipment)));
+            }
+            catch(SerializationException)
+            {
+                Console.WriteLine("Serialization Exception!");
+            }
+        }
+        private IList<Item> items;
+        public void SetItems(IList<Item> tmp)
+        {
+            items = tmp;
+        }
+        public IList<Item> GetItems()
+        {
+            return items;
+        }
+        private HeadEquipment head;
+        public void SetHead(HeadEquipment tmp)
+        {
+            head = tmp;
+        }
+        public HeadEquipment GetHead()
+        {
+            return head;
+        }
+        private HandguardEquipment handguard;
+        public void SetHandguard(HandguardEquipment tmp)
+        {
+            handguard = tmp;
+        }
+        public HandguardEquipment GetHandguard()
+        {
+            return handguard;
+        }
+
+        private ClothEquipment cloth;
+        public void SetCloth(ClothEquipment tmp)
+        {
+            cloth = tmp;
+        }
+        public ClothEquipment GetCloth()
+        {
+            return cloth;
+        }
+        private ShoeEquipment shoe;
+        public ShoeEquipment GetShoe()
+        {
+            return shoe;
+        }
+        public void SetShoe(ShoeEquipment tmp)
+        {
+            shoe = tmp;
+        }
+        private WeaponEquipment weapon;
+        public WeaponEquipment GetWeapon()
+        {
+            return weapon;
+        }
+        public void SetWeapon(WeaponEquipment tmp)
+        {
+            weapon = tmp;
+        }
 
         public void UseItem(Item item)
         {
@@ -182,6 +291,19 @@ namespace PlayerClassDesign
         {
             skill.UpgradeSkill();
         }
+
+        public new string ToString()
+        {
+            string tmp = String.Empty;
+            tmp = base.ToString();
+            tmp += "\nHeadEquipment: "+GetHead().Name
+                    +"\nHandguardEquipment: "+GetHandguard().Name
+                    +"\nClothEquipment: "+GetCloth().Name
+                    +"\nShoeEquipment: "+GetShoe().Name
+                    +"\nWeqponEquipment: "+GetWeapon().Name
+                    +"\nItemsCount: "+GetItems().Count;
+            return tmp;
+        }
         public void Equip(Equipment equipment)
         {
             equipment.Equip();
@@ -189,27 +311,27 @@ namespace PlayerClassDesign
             {
                 case "Items.HeadEquipment":
                 {
-                    Head = (HeadEquipment)equipment;
+                    SetHead((HeadEquipment)equipment);
                     break;
                 }
                 case "Items.ClothEquipment":
                 {
-                    Cloth = (ClothEquipment)equipment;
+                    SetCloth((ClothEquipment)equipment);
                     break;
                 }
                 case "Items.WeaponEquipment":
                 {
-                    Weapon = (WeaponEquipment)equipment;
+                    SetWeapon((WeaponEquipment)equipment);
                     break;
                 }
                 case "Items.HandguardEquipment":
                 {
-                    Handguard = (HandguardEquipment)equipment;
+                    SetHandguard((HandguardEquipment)equipment);
                     break;
                 }
                 case "Items.ShoeEquipment":
                 {
-                    Shoe = (ShoeEquipment)equipment;
+                    SetShoe((ShoeEquipment)equipment);
                     break;
                 }
                 default:
@@ -218,6 +340,25 @@ namespace PlayerClassDesign
                     break;
                 }
             }
+        }
+
+        public void GetObjectData(SerializationInfo info,StreamingContext context)
+        {
+            info.AddValue("Name",Name,typeof(String));
+            info.AddValue("Sex",Sex,typeof(SEX));
+            info.AddValue("Level",Level,typeof(int));
+            info.AddValue("Life",Life,typeof(int));
+            info.AddValue("Attack",Attack,typeof(int));
+            info.AddValue("Defense",Defense,typeof(int));
+            info.AddValue("Hit",Hit,typeof(int));
+            info.AddValue("Dodge",Dodge,typeof(int));
+            info.AddValue("Items",GetItems(),typeof(IList<Item>));
+            info.AddValue("Skills",GetSkills(),typeof(List<Skill>));
+            info.AddValue("HeadEquipment",GetHead(),typeof(HeadEquipment));
+            info.AddValue("HandguardEquipment",GetHandguard(),typeof(HandguardEquipment));
+            info.AddValue("ClothEquipment",GetCloth(),typeof(ClothEquipment));
+            info.AddValue("ShoeEquipment",GetShoe(),typeof(ShoeEquipment));
+            info.AddValue("WeaponEquipment",GetWeapon(),typeof(WeaponEquipment));
         }
     }
 

@@ -1,14 +1,28 @@
 using System;
 using PlayerClassDesign;
+using System.Runtime.Serialization;
 
 namespace ItemClassDesign
 {
     public abstract class Item
     {
         //Reference no need to instantiation
-        public Role User;
+        private Role User;
+        public void SetUser(Role user)
+        {
+            User = user;
+        }
+        public Role GetUser()
+        {
+            return User;
+        }
         private string name;
 
+
+        public Item()
+        {
+
+        }
         public Item(string _name,Role _User)
         {
             name = _name;
@@ -18,7 +32,7 @@ namespace ItemClassDesign
         public string Name
         {
             get{return name;}
-            //set{name = value;}
+            set{name = value;}
         }
 
         public abstract void UseItem();
@@ -27,13 +41,25 @@ namespace ItemClassDesign
 
     public abstract class Equipment
     {
-        public Equipment(){}
+        public Equipment()
+        {
+            Name = "No Equipment";
+        }
         public Equipment(string _name,Role _role)
         {
             Name = _name;
             User = _role;
         }
-        public Role User;
+        private Role User;
+        public void SetUser(Role user)
+        {
+            User = user;
+        }
+        public Role GetUser()
+        {
+            return User;
+        }
+
 
         private string name;
         public string Name
@@ -62,4 +88,19 @@ namespace ItemClassDesign
     {
         void DodgeEnhance();
     }
+    public class GameSerializationBinder : SerializationBinder
+    {
+        public override void BindToName(Type serializedType, out string assemblyName, out string typeName)
+        {
+            assemblyName = null;
+            typeName = serializedType.Name;
+            Console.WriteLine("****************"+typeName);
+        }
+        public override Type BindToType(string assemblyName, string typeName)
+        {
+            Console.WriteLine("=================="+typeName);
+           return Type.GetType(string.Format(typeName),true);
+        }
+    }
+
 }

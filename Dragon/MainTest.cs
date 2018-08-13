@@ -5,13 +5,18 @@ using Items;
 using SkillClassDesign;
 using Skills;
 using System.Threading.Tasks;
+using StorageClass;
 
 namespace Test
 {
     class Program
     {
+        static string dirpath = "C:/Users/i343817/Desktop/Exercise/Dragon"+"/Save";
+        static string fileName = dirpath + "/GameData.sav";
         static void Main(string[] args)
         {
+            Storage.CreateDirectory(dirpath);
+            
             Player player = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
             Monster Gooo = new Monster("哥布林",SEX.Man,1,8,2,50,0,0,40,10,100);
 
@@ -31,24 +36,24 @@ namespace Test
             ShoeEquipment Etmp4 = new ShoeEquipment("布鞋",player,20);
             HandguardEquipment Etmp5 = new HandguardEquipment("灰护手",player,10);
 
-            player.Skills.Add(tmp1);
-            player.Skills.Add(tmp2);
-            player.Skills.Add(tmp3);
+            player.GetSkills().Add(tmp1);
+            player.GetSkills().Add(tmp2);
+            player.GetSkills().Add(tmp3);
 
-            player.items.Add(Itmp1);
-            player.items.Add(Itmp2);
-            player.items.Add(Itmp3);
-            player.items.Add(Itmp4);
-            player.items.Add(Itmp5);
+            player.GetItems().Add(Itmp1);
+            player.GetItems().Add(Itmp2);
+            player.GetItems().Add(Itmp3);
+            player.GetItems().Add(Itmp4);
+            player.GetItems().Add(Itmp5);
 
             //Console.WriteLine(player.Skills.Count.ToString());
-            foreach(Skill t in player.Skills)
+            foreach(Skill t in player.GetSkills())
             {
                 player.UseSkill(t);
                 player.UpgradeSkill(t);
             }
 
-/*             foreach(Item t in player.items)
+            foreach(Item t in player.GetItems())
             {
                 player.UseItem(t);
             } 
@@ -57,34 +62,40 @@ namespace Test
             player.Equip(Etmp2);
             player.Equip(Etmp3);
             player.Equip(Etmp4); 
-            player.Equip(Etmp5);  */
+            player.Equip(Etmp5); 
 
             Console.WriteLine("玩家装备:");
-            Console.WriteLine("头部: "+player.Head.Name);
-            Console.WriteLine("武器: "+player.Weapon.Name);
-            Console.WriteLine("鞋子: "+player.Shoe.Name);
-            Console.WriteLine("衣服: "+player.Cloth.Name);
-            Console.WriteLine("护手: "+player.Handguard.Name);
+            Console.WriteLine("头部: "+player.GetHead().Name);
+            Console.WriteLine("武器: "+player.GetWeapon().Name);
+            Console.WriteLine("鞋子: "+player.GetShoe().Name);
+            Console.WriteLine("衣服: "+player.GetCloth().Name);
+            Console.WriteLine("护手: "+player.GetHandguard().Name);
 
             while(!player.dead&&!Gooo.dead)
+            {
+                if(!player.dead)
                 {
-                    if(!player.dead)
-                    {
-                        player.ATTACK(Gooo);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                    if(!Gooo.dead)
-                    {
-                        Gooo.ATTACK(player);
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    player.ATTACK(Gooo);
                 }
+                else
+                {
+                    break;
+                }
+                if(!Gooo.dead)
+                {
+                    Gooo.ATTACK(player);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            var binder = new GameSerializationBinder();
+            Storage.SetData(fileName,player,binder);
+            Player TestPlayer = (Player)Storage.GetData(fileName,typeof(Player),binder);
+
+            Console.WriteLine(TestPlayer.ToString());
+            Console.WriteLine("===============");
         }
     }
 }
