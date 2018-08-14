@@ -17,6 +17,7 @@ namespace Items
             Name = info.GetString("ItemName");
             ResumCount = info.GetInt16("ResumCount");
             SetUser((Role)info.GetValue("User",typeof(Role)));
+            Num = info.GetInt16("Num");
         }
         public int ResumCount
         {
@@ -25,19 +26,21 @@ namespace Items
         }
         public void GetObjectData(SerializationInfo info,StreamingContext context)
         {
+            info.SetType(typeof(ResumeItem));
             info.AddValue("ItemName",Name,typeof(string));
             info.AddValue("ResumCount",ResumCount,typeof(int));
             info.AddValue("User",GetUser(),typeof(Role));
+            info.AddValue("Num",Num,typeof(int));
         }
-        public ResumeItem(string _name,Role _Role,int _resumCount):base(_name,_Role)
+        public ResumeItem(string _name,Role _Role,int _resumCount,int _num):base(_name,_Role,_num)
         {
             ResumCount = _resumCount;
         }
         public override void UseItem()
         {
             GetUser().Life += ResumCount;
+            Num--;
             #if DEBUG
-                #warning Debug State
                 Console.WriteLine("==================");
                 Console.WriteLine("使用"+Name+" ,回复"+resumCount.ToString()+"生命值，现在生命值："+GetUser().Life);
                 Console.WriteLine("==================");
@@ -67,10 +70,12 @@ namespace Items
         }
         public void GetObjectData(SerializationInfo info,StreamingContext context)
         {
+            info.SetType(typeof(AttackStrongItem));
             info.AddValue("Name",Name,typeof(string));
             info.AddValue("Count",AttackEnhanceCount,typeof(int));
             info.AddValue("ValidityPeriod",ValidityPeriod,typeof(int));
             info.AddValue("User",GetUser(),typeof(Role));
+            info.AddValue("Num",Num,typeof(int));          
         }
         protected AttackStrongItem(SerializationInfo info,StreamingContext context)
         {
@@ -78,8 +83,9 @@ namespace Items
             AttackEnhanceCount = info.GetInt16("Count");
             ValidityPeriod = info.GetInt16("ValidityPeriod");
             SetUser((Role)info.GetValue("User",typeof(Role)));
+            Num = info.GetInt16("Num");
         }
-        public AttackStrongItem(string _name,Role _Role,int _attackEnhanceCount,int _validityPeriod):base(_name,_Role)
+        public AttackStrongItem(string _name,Role _Role,int _attackEnhanceCount,int _validityPeriod,int _num):base(_name,_Role,_num)
         {
             attackEnhanceCount = _attackEnhanceCount;
             validityPeriod = _validityPeriod;
@@ -87,6 +93,7 @@ namespace Items
         public override void UseItem()
         {
             AttackEnhance();
+            Num--;
             #if DEBUG
                 Console.WriteLine("=================");
                 Console.WriteLine("使用"+Name+"攻击力强化:"+AttackEnhanceCount+" 现在攻击力:"+GetUser().Attack);
@@ -117,19 +124,21 @@ namespace Items
         public int DefenseEnhanceCount
         {
             get{return defenseEnhanceCount;}
-            set{DefenseEnhanceCount = value;}
+            set{defenseEnhanceCount = value;}
         }
-        public DefenseStrongItem(string _name,Role _Role,int _defenseEnhanceCount,int _validityPeriod):base(_name,_Role)
+        public DefenseStrongItem(string _name,Role _Role,int _defenseEnhanceCount,int _validityPeriod,int _num):base(_name,_Role,_num)
         {
             defenseEnhanceCount = _defenseEnhanceCount;
             validityPeriod = _validityPeriod;
         }
         public void GetObjectData(SerializationInfo info,StreamingContext context)
         {
+            info.SetType(typeof(DefenseStrongItem));
             info.AddValue("Name",Name,typeof(string));
             info.AddValue("Count",DefenseEnhanceCount,typeof(int));
             info.AddValue("ValidityPeriod",ValidityPeriod,typeof(int));
             info.AddValue("User",GetUser(),typeof(Role));
+            info.AddValue("Num",Num,typeof(int));            
         }
         protected DefenseStrongItem(SerializationInfo info,StreamingContext context)
         {
@@ -137,10 +146,12 @@ namespace Items
             DefenseEnhanceCount = info.GetInt16("Count");
             ValidityPeriod = info.GetInt16("ValidityPeriod");
             SetUser((Role)info.GetValue("User",typeof(Role)));
+            Num = info.GetInt16("Num");
         }
         public override void UseItem()
         {
             DefenseEnhance();
+            Num--;
             #if DEBUG
                 Console.WriteLine("=================");
                 Console.WriteLine("使用"+Name+"防御力强化:"+DefenseEnhanceCount+" 现在防御力:"+GetUser().Defense);
@@ -172,7 +183,7 @@ namespace Items
             get{return hitEnhanceCount;}
             set{hitEnhanceCount = value;}
         }
-        public HitStrongItem(string _name,Role _Role,int _hitEnhanceCount,int _validityPeriod):base(_name,_Role)
+        public HitStrongItem(string _name,Role _Role,int _hitEnhanceCount,int _validityPeriod,int _num):base(_name,_Role,_num)
         {
             hitEnhanceCount = _hitEnhanceCount;
             validityPeriod = _validityPeriod;
@@ -183,6 +194,7 @@ namespace Items
             info.AddValue("Count",HitEnhanceCount,typeof(int));
             info.AddValue("ValidityPeriod",ValidityPeriod,typeof(int));
             info.AddValue("User",GetUser(),typeof(Role));
+            info.AddValue("Num",Num,typeof(int));
         }
         protected HitStrongItem(SerializationInfo info,StreamingContext context)
         {
@@ -190,10 +202,12 @@ namespace Items
             HitEnhanceCount = info.GetInt16("Count");
             ValidityPeriod = info.GetInt16("ValidityPeriod");
             SetUser((Role)info.GetValue("User",typeof(Role)));
+            Num = info.GetInt16("Num");
         }
         public override void UseItem()
         {
             HitEnhance();
+            Num--;
             #if DEBUG
                 Console.WriteLine("=================");
                 Console.WriteLine("使用"+Name+"命中率强化:"+HitEnhanceCount+" 现在命中:"+GetUser().Hit);
@@ -210,7 +224,7 @@ namespace Items
             return "强化命中";
         }
     }
-    public class DodgeStrongItem : Item,IDodgeEnhance
+    public class DodgeStrongItem : Item,IDodgeEnhance,ISerializable
     {
         private int dodgeEnhanceCount;
         private int validityPeriod;
@@ -223,9 +237,9 @@ namespace Items
         public int DodgeEnhanceCount
         {
             get{return dodgeEnhanceCount;}
-            set{DodgeEnhanceCount = value;}
+            set{dodgeEnhanceCount = value;}
         }
-        public DodgeStrongItem(string _name,Role _Role,int _dodgeEnhanceCount,int _validityPeriod):base(_name,_Role)
+        public DodgeStrongItem(string _name,Role _Role,int _dodgeEnhanceCount,int _validityPeriod,int _num):base(_name,_Role,_num)
         {
             dodgeEnhanceCount = _dodgeEnhanceCount;
             validityPeriod = _validityPeriod;
@@ -236,6 +250,7 @@ namespace Items
             info.AddValue("Count",DodgeEnhanceCount,typeof(int));
             info.AddValue("ValidityPeriod",ValidityPeriod,typeof(int));
             info.AddValue("User",GetUser(),typeof(Role));
+            info.AddValue("Num",Num,typeof(int));
         }
         protected DodgeStrongItem(SerializationInfo info,StreamingContext context)
         {
@@ -243,10 +258,12 @@ namespace Items
             DodgeEnhanceCount = info.GetInt16("Count");
             ValidityPeriod = info.GetInt16("ValidityPeriod");
             SetUser((Role)info.GetValue("User",typeof(Role)));
+            Num = info.GetInt16("Num");
         }
         public override void UseItem()
         {
             DodgeEnhance();
+            Num--;
             #if DEBUG
                 Console.WriteLine("=================");
                 Console.WriteLine("使用"+Name+"闪避强化:"+DodgeEnhanceCount+" 现在闪避:"+GetUser().Dodge);
@@ -306,7 +323,7 @@ namespace Items
         }
     }
 
-    public class HeadEquipment : Equipment,IDefenseEnhance
+    public class HeadEquipment : Equipment,IDefenseEnhance,ISerializable
     {
         private int defenseEnhanceCount;
         public HeadEquipment(){}
@@ -347,7 +364,7 @@ namespace Items
             return "头部装备";
         }
     }
-    public class ShoeEquipment : Equipment,IDodgeEnhance
+    public class ShoeEquipment : Equipment,IDodgeEnhance,ISerializable
     {
         public ShoeEquipment(){}
         private int dodgeEnhanceCount;
@@ -387,7 +404,7 @@ namespace Items
             return "鞋部装备";
         }
     }
-   public class ClothEquipment : Equipment,IDefenseEnhance
+   public class ClothEquipment : Equipment,IDefenseEnhance,ISerializable
     {
         private int defenseEnhanceCount;
         public ClothEquipment(){}
@@ -428,7 +445,7 @@ namespace Items
             return "衣服装备";
         }
     }
-    public class HandguardEquipment : Equipment,IHitEnhance
+    public class HandguardEquipment : Equipment,IHitEnhance,ISerializable
     {
         private int hitEnhanceCount;
         public HandguardEquipment(){}

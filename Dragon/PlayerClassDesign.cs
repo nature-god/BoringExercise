@@ -178,6 +178,10 @@ namespace PlayerClassDesign
     [Serializable]
     class Player : Role,ISerializable
     {
+        public Player()
+        {
+            
+        }
         public Player(string _name,SEX _sex,
                         int _level,int _attack,
                         int _defense,int _life,
@@ -215,12 +219,12 @@ namespace PlayerClassDesign
                 items = new List<Item>();
 
                 SetItems((List<Item>)info.GetValue("Items",typeof(List<Item>)));
-                SetSkills((IList<Skill>)info.GetValue("Skills",typeof(IList<Skill>)));
+                SetSkills((List<Skill>)info.GetValue("Skills",typeof(List<Skill>)));
                 SetHead((HeadEquipment)info.GetValue("HeadEquipment",typeof(HeadEquipment)));
                 SetHandguard((HandguardEquipment)info.GetValue("HandguardEquipment",typeof(HandguardEquipment)));
                 SetCloth((ClothEquipment)info.GetValue("ClothEquipment",typeof(ClothEquipment)));
                 SetShoe((ShoeEquipment)info.GetValue("ShoeEquipment",typeof(ShoeEquipment)));
-                SetWeapon((WeaponEquipment)info.GetValue("Weapon",typeof(WeaponEquipment)));
+                SetWeapon((WeaponEquipment)info.GetValue("WeaponEquipment",typeof(WeaponEquipment)));
             }
             catch(SerializationException)
             {
@@ -300,8 +304,18 @@ namespace PlayerClassDesign
                     +"\nHandguardEquipment: "+GetHandguard().Name
                     +"\nClothEquipment: "+GetCloth().Name
                     +"\nShoeEquipment: "+GetShoe().Name
-                    +"\nWeqponEquipment: "+GetWeapon().Name
+                    +"\nWeaponEquipment: "+GetWeapon().Name
                     +"\nItemsCount: "+GetItems().Count;
+            foreach(Item i in GetItems())
+            {
+                tmp += "\n+ItemName: "+i.Name
+                        +"\n    ItemNum: "+i.Num;
+            }
+            foreach(Skill s in GetSkills())
+            {
+                tmp += "\n+SkillName: "+s.SkillName
+                        +"\n    SkillLevel: "+s.Level;
+            }
             return tmp;
         }
         public void Equip(Equipment equipment)
@@ -352,7 +366,7 @@ namespace PlayerClassDesign
             info.AddValue("Defense",Defense,typeof(int));
             info.AddValue("Hit",Hit,typeof(int));
             info.AddValue("Dodge",Dodge,typeof(int));
-            info.AddValue("Items",GetItems(),typeof(IList<Item>));
+            info.AddValue("Items",GetItems(),typeof(List<Item>));
             info.AddValue("Skills",GetSkills(),typeof(List<Skill>));
             info.AddValue("HeadEquipment",GetHead(),typeof(HeadEquipment));
             info.AddValue("HandguardEquipment",GetHandguard(),typeof(HandguardEquipment));
