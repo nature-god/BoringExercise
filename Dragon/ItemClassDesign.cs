@@ -104,11 +104,11 @@ namespace ItemClassDesign
         {
             assemblyName = null;
             typeName = serializedType.FullName;
-            Console.WriteLine("****************"+typeName);
+            //Console.WriteLine("****************"+typeName);
         }
         public override Type BindToType(string assemblyName, string typeName)
         {
-            Console.WriteLine("=================="+typeName);
+            //Console.WriteLine("=================="+typeName);
             if(typeName.Contains("List")&&typeName.Contains("Item"))
             {
                 return typeof(List<Item>);

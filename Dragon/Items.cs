@@ -29,7 +29,7 @@ namespace Items
             info.SetType(typeof(ResumeItem));
             info.AddValue("ItemName",Name,typeof(string));
             info.AddValue("ResumCount",ResumCount,typeof(int));
-            info.AddValue("User",GetUser(),typeof(Role));
+            info.AddValue("User",GetUser().Name,typeof(string));
             info.AddValue("Num",Num,typeof(int));
         }
         public ResumeItem(string _name,Role _Role,int _resumCount,int _num):base(_name,_Role,_num)
@@ -39,12 +39,9 @@ namespace Items
         public override void UseItem()
         {
             GetUser().Life += ResumCount;
-            Num--;
-            #if DEBUG
-                Console.WriteLine("==================");
-                Console.WriteLine("使用"+Name+" ,回复"+resumCount.ToString()+"生命值，现在生命值："+GetUser().Life);
-                Console.WriteLine("==================");
-            #endif
+            Console.WriteLine("==================");
+            Console.WriteLine("使用"+Name+" ,回复"+resumCount.ToString()+"生命值，现在生命值："+GetUser().Life);
+            Console.WriteLine("==================");
         }
 
         public override string Description()
@@ -93,7 +90,6 @@ namespace Items
         public override void UseItem()
         {
             AttackEnhance();
-            Num--;
             #if DEBUG
                 Console.WriteLine("=================");
                 Console.WriteLine("使用"+Name+"攻击力强化:"+AttackEnhanceCount+" 现在攻击力:"+GetUser().Attack);
@@ -151,7 +147,6 @@ namespace Items
         public override void UseItem()
         {
             DefenseEnhance();
-            Num--;
             #if DEBUG
                 Console.WriteLine("=================");
                 Console.WriteLine("使用"+Name+"防御力强化:"+DefenseEnhanceCount+" 现在防御力:"+GetUser().Defense);
@@ -207,7 +202,6 @@ namespace Items
         public override void UseItem()
         {
             HitEnhance();
-            Num--;
             #if DEBUG
                 Console.WriteLine("=================");
                 Console.WriteLine("使用"+Name+"命中率强化:"+HitEnhanceCount+" 现在命中:"+GetUser().Hit);
@@ -263,7 +257,6 @@ namespace Items
         public override void UseItem()
         {
             DodgeEnhance();
-            Num--;
             #if DEBUG
                 Console.WriteLine("=================");
                 Console.WriteLine("使用"+Name+"闪避强化:"+DodgeEnhanceCount+" 现在闪避:"+GetUser().Dodge);

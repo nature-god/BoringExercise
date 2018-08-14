@@ -17,7 +17,7 @@ namespace Test
         static void Main(string[] args)
         {
             
-            Player player = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
+/*             Player player = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
             Monster Gooo = new Monster("哥布林",SEX.Man,1,8,2,50,0,0,40,10,100);
 
             PhysicalSkill tmp1 = new PhysicalSkill("小刀突击",10,1);
@@ -40,23 +40,20 @@ namespace Test
             player.GetSkills().Add(tmp2);
             player.GetSkills().Add(tmp3);
 
-            player.GetItems().Add(Itmp1);
-            player.GetItems().Add(Itmp2);
-            player.GetItems().Add(Itmp3);
-            player.GetItems().Add(Itmp4);
-            player.GetItems().Add(Itmp5);
+            player.AddItem(Itmp1);
+            player.AddItem(Itmp2);
+            player.AddItem(Itmp2);
+            player.AddItem(Itmp3);
+            player.AddItem(Itmp4);
+            player.AddItem(Itmp5);
 
             //Console.WriteLine(player.Skills.Count.ToString());
-/*             foreach(Skill t in player.GetSkills())
+            foreach(Skill t in player.GetSkills())
             {
                 player.UseSkill(t);
                 player.UpgradeSkill(t);
-            }*/
+            }
 
-            foreach(Item t in player.GetItems())
-            {
-                player.UseItem(t);
-            }  
 
             player.Equip(Etmp1);
             player.Equip(Etmp2);
@@ -90,13 +87,18 @@ namespace Test
                     break;
                 }
             }
-            Storage.CreateDirectory(dirpath);
+            Storage.CreateDirectory(dirpath); */
 
             var binder = new GameSerializationBinder();
-            Storage.SetData(fileName,player,binder);
+            //Storage.SetData(fileName,player,binder);
             Player TestPlayer = (Player)Storage.GetData(fileName,typeof(Player),binder);
+            Console.WriteLine(TestPlayer.ToString());
+            Console.WriteLine("===============");
 
-
+            for(int i=0;i<TestPlayer.GetItems().Count;i++)
+            {
+                TestPlayer.UseItem(TestPlayer.GetItems()[i]);
+            }
             Console.WriteLine(TestPlayer.ToString());
             Console.WriteLine("===============");
         }

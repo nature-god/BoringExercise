@@ -50,7 +50,7 @@ namespace StorageClass
             StreamReader streamReader = File.OpenText(fileName);
             string data = streamReader.ReadToEnd();
             data = RijndaelDecrypt(data,"RecommendedGraduateStudentAAAAAA");
-            Console.WriteLine("Decrypt Data:\n"+data);
+            //Console.WriteLine("Decrypt Data:\n"+data);
             streamReader.Close();
             return DeserializeObject(data,pType,binder);
         }

@@ -225,11 +225,28 @@ namespace PlayerClassDesign
                 SetCloth((ClothEquipment)info.GetValue("ClothEquipment",typeof(ClothEquipment)));
                 SetShoe((ShoeEquipment)info.GetValue("ShoeEquipment",typeof(ShoeEquipment)));
                 SetWeapon((WeaponEquipment)info.GetValue("WeaponEquipment",typeof(WeaponEquipment)));
+
+                foreach(Item i in items)
+                {
+                    i.SetUser(this);
+                }
             }
             catch(SerializationException)
             {
                 Console.WriteLine("Serialization Exception!");
             }
+        }
+        public void AddItem(Item i)
+        {
+            for(int t=0;t<items.Count;t++)
+            {
+                if(items[t].Name == i.Name)
+                {
+                    items[t].Num += i.Num;
+                    return;
+                }
+            }
+            items.Add(i);
         }
         private IList<Item> items;
         public void SetItems(IList<Item> tmp)
@@ -287,9 +304,20 @@ namespace PlayerClassDesign
             weapon = tmp;
         }
 
-        public void UseItem(Item item)
+        public void UseItem(Item i)
         {
-            item.UseItem();
+            for(int t=0;t<items.Count;t++)
+            {
+                if(string.Equals(items[t].Name,i.Name)&&items[t].Num != 0)
+                {
+                    items[t].UseItem();
+                    items[t].Num--;
+                    if(items[t].Num == 0)
+                    {
+                        items.RemoveAt(t);
+                    }
+                }
+            }
         }
         public void UpgradeSkill(Skill skill)
         {
