@@ -4,6 +4,8 @@ using System;
 using ItemClassDesign;
 using PlayerClassDesign;
 using System.Runtime.Serialization;
+using SkillClassDesign;
+using Skills;
 
 namespace Items
 {
@@ -477,6 +479,85 @@ namespace Items
         public override string Description()
         {
             return "护手装备";
+        }
+    }
+
+    public class SkillBook : Item,ISerializable
+    {
+        private int skillType;
+        public int SkillType
+        {
+            get{return skillType;}
+            set{skillType = value;}
+        }
+        private int skillLevel;
+        public int SkillLevel
+        {
+            get{return skillLevel;}
+            set{skillLevel = value;}
+        }
+        private int skillAttack;
+        public int SkillAttack
+        {
+            get{return skillAttack;}
+            set{skillAttack = value;}
+        }
+        public Skill LearnSkill()
+        {
+            Console.WriteLine(Name+SkillLevel+SkillAttack);
+            if(SkillType == 0)
+            {
+                return new PhysicalSkill(Name,SkillAttack,SkillLevel);
+            }
+            else if(SkillType == 1)
+            {
+                return new MagicalSkill(Name,SkillAttack,SkillLevel);
+            }
+            else
+            {
+                return new PhysicalSkill(Name,SkillAttack,SkillLevel);
+            }
+        }
+        protected SkillBook(SerializationInfo info,StreamingContext context)
+        {
+            Name = info.GetString("ItemName");
+            Num = info.GetInt16("Num");
+            SkillType = info.GetInt16("SkillType");
+            SkillLevel = info.GetInt16("SkillLevel");
+            SkillAttack = info.GetInt16("SkillAttack");
+        }
+        public void GetObjectData(SerializationInfo info,StreamingContext context)
+        {
+            info.SetType(typeof(SkillBook));
+            info.AddValue("ItemName",Name,typeof(string));
+            info.AddValue("SkillType",SkillType,typeof(int));
+            info.AddValue("SkillLevel",SkillLevel,typeof(int));
+            info.AddValue("SkillAttack",SkillAttack,typeof(int));
+            info.AddValue("Num",Num,typeof(int));
+        }
+        
+        public SkillBook(string _name,Role _Role,int _num,int _skillType,int _skillLevel,int _skillAttack):base(_name,_Role,_num)
+        {   
+            SkillType = _skillType;
+            SkillLevel = _skillLevel;
+            SkillAttack = _skillAttack;
+        }
+        public override void UseItem()
+        {
+            Role user = GetUser();
+            foreach(Skill t in user.GetSkills())
+            {
+                if(String.Equals(this.Name,t.SkillName))
+                {
+                    Console.WriteLine("You Have learned this skill!");
+                    return;
+                }
+            }
+            user.GetSkills().Add(this.LearnSkill());
+        }
+        public override string Description()
+        {
+            return "书本";
         }
     }
 }

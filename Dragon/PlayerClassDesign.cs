@@ -230,6 +230,11 @@ namespace PlayerClassDesign
                 {
                     i.SetUser(this);
                 }
+                GetHead().SetUser(this);
+                GetHandguard().SetUser(this);
+                GetCloth().SetUser(this);
+                GetShoe().SetUser(this);
+                GetWeapon().SetUser(this);
             }
             catch(SerializationException)
             {
@@ -322,6 +327,7 @@ namespace PlayerClassDesign
         public void UpgradeSkill(Skill skill)
         {
             skill.UpgradeSkill();
+            skill.Level++;
         }
 
         public new string ToString()
@@ -336,13 +342,14 @@ namespace PlayerClassDesign
                     +"\nItemsCount: "+GetItems().Count;
             foreach(Item i in GetItems())
             {
-                tmp += "\n+ItemName: "+i.Name
+                tmp += "\n  +ItemName: "+i.Name
                         +"\n    ItemNum: "+i.Num;
             }
             foreach(Skill s in GetSkills())
             {
-                tmp += "\n+SkillName: "+s.SkillName
-                        +"\n    SkillLevel: "+s.Level;
+                tmp += "\n  +SkillName: "+s.SkillName
+                        +"\n    SkillLevel: "+s.Level
+                        +"\n    SkillAttack: "+s.Attack;
             }
             return tmp;
         }

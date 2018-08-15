@@ -17,7 +17,7 @@ namespace Test
         static void Main(string[] args)
         {
             
-/*             Player player = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
+/*          Player player = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
             Monster Gooo = new Monster("哥布林",SEX.Man,1,8,2,50,0,0,40,10,100);
 
             PhysicalSkill tmp1 = new PhysicalSkill("小刀突击",10,1);
@@ -92,15 +92,24 @@ namespace Test
             var binder = new GameSerializationBinder();
             //Storage.SetData(fileName,player,binder);
             Player TestPlayer = (Player)Storage.GetData(fileName,typeof(Player),binder);
+            //Player TestPlayer = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
             Console.WriteLine(TestPlayer.ToString());
             Console.WriteLine("===============");
 
-            for(int i=0;i<TestPlayer.GetItems().Count;i++)
+            /* for(int i=0;i<TestPlayer.GetItems().Count;i++)
             {
                 TestPlayer.UseItem(TestPlayer.GetItems()[i]);
-            }
+            } */
+            AttackStrongItem Itmp2 = new AttackStrongItem("藏锋丹",TestPlayer,15,30,6);
+            DefenseStrongItem Itmp3 = new DefenseStrongItem("宝象丹",TestPlayer,25,30,1);
+            //SkillBook bbb = new SkillBook("剑荡八荒",TestPlayer,1,0,3,10);
+            TestPlayer.AddItem(Itmp3);
+            //TestPlayer.AddItem(bbb);
+            //TestPlayer.UseItem(bbb);
+            TestPlayer.UpgradeSkill(TestPlayer.GetSkills()[0]);
             Console.WriteLine(TestPlayer.ToString());
             Console.WriteLine("===============");
+            //Storage.SetData(fileName,TestPlayer,binder);
         }
     }
 }

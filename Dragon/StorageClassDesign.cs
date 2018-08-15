@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Collections;
 using System.Security.Cryptography;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using ItemClassDesign;
 
@@ -39,6 +40,7 @@ namespace StorageClass
         public static void SetData(string fileName,Object pObject,GameSerializationBinder binder)
         {
             string toSave = SerializeObject(pObject,binder);
+            Console.WriteLine(toSave);
             toSave = RijndaelEncrypt(toSave,"RecommendedGraduateStudentAAAAAA");
             StreamWriter streamWriter = File.CreateText(fileName);
             streamWriter.Write(toSave);
