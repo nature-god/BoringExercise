@@ -172,6 +172,27 @@ namespace PlayerClassDesign
                 Console.WriteLine(role.name+"剩余生命"+role.life);
             #endif
         }
+        public void ATTACK(Role role,Skill skill)
+        {
+            int hurt = 0;
+            int offset = new Random().Next(0,(((Hit-role.Dodge)>1)?(Hit-role.Dodge):0));
+            hurt = skill.Attack - role.Defense + offset; 
+            if(hurt <= 0)
+            {
+                hurt = 1;
+            }
+            role.Life -= hurt;
+            #if DEBUG
+                Console.WriteLine("=========================");
+                if(offset >= (Hit-role.Dodge)/2)
+                {
+                    Console.WriteLine("暴击!");
+                }
+                Console.WriteLine(Name +"攻击"+role.name+"造成了" + hurt+"伤害");
+                Console.WriteLine(Name +"剩余生命："+life);
+                Console.WriteLine(role.name+"剩余生命"+role.life);
+            #endif
+        }
         #endregion
     }
 

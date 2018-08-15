@@ -102,11 +102,31 @@ namespace Test
             } */
             AttackStrongItem Itmp2 = new AttackStrongItem("藏锋丹",TestPlayer,15,30,6);
             DefenseStrongItem Itmp3 = new DefenseStrongItem("宝象丹",TestPlayer,25,30,1);
-            //SkillBook bbb = new SkillBook("剑荡八荒",TestPlayer,1,0,3,10);
             TestPlayer.AddItem(Itmp3);
+            TestPlayer.UpgradeSkill(TestPlayer.GetSkills()[0]);
+            Monster Gooo = new Monster("哥布林",SEX.Man,1,8,2,50,0,0,40,10,100);
+            while(!TestPlayer.dead&&!Gooo.dead)
+            {
+                if(!TestPlayer.dead)
+                {
+                    TestPlayer.ATTACK(Gooo,TestPlayer.GetSkills()[0]);
+                }
+                else
+                {
+                    break;
+                }
+                if(!Gooo.dead)
+                {
+                    Gooo.ATTACK(TestPlayer);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            //SkillBook bbb = new SkillBook("剑荡八荒",TestPlayer,1,0,3,10);
             //TestPlayer.AddItem(bbb);
             //TestPlayer.UseItem(bbb);
-            TestPlayer.UpgradeSkill(TestPlayer.GetSkills()[0]);
             Console.WriteLine(TestPlayer.ToString());
             Console.WriteLine("===============");
             //Storage.SetData(fileName,TestPlayer,binder);
