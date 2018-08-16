@@ -16,100 +16,43 @@ namespace Test
         static string fileName = dirpath + "/GameData.sav";
         static void Main(string[] args)
         {
-            
-/*          Player player = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
-            Monster Gooo = new Monster("哥布林",SEX.Man,1,8,2,50,0,0,40,10,100);
-
-            PhysicalSkill tmp1 = new PhysicalSkill("小刀突击",10,1);
-            PhysicalSkill tmp2 = new PhysicalSkill("酒鬼战意",6,1);
-            MagicalSkill tmp3 = new MagicalSkill("龙契约符咒",15,1);
-
-            ResumeItem Itmp1 = new ResumeItem("回春丹",player,10,1);
-            AttackStrongItem Itmp2 = new AttackStrongItem("藏锋丹",player,15,30,1);
-            DefenseStrongItem Itmp3 = new DefenseStrongItem("宝象丹",player,25,30,1);
-            HitStrongItem Itmp4 = new HitStrongItem("天仙造化丹",player,50,60,1);
-            DodgeStrongItem Itmp5 = new DodgeStrongItem("闪避灵灵丹",player,20,40,2);
-            
-            HeadEquipment Etmp1 = new HeadEquipment("头盔",player,20);
-            WeaponEquipment Etmp2 = new WeaponEquipment("新手剑",player,40);
-            ClothEquipment Etmp3 = new ClothEquipment("灰袍",player,25);
-            ShoeEquipment Etmp4 = new ShoeEquipment("布鞋",player,20);
-            HandguardEquipment Etmp5 = new HandguardEquipment("灰护手",player,10);
-
-            player.GetSkills().Add(tmp1);
-            player.GetSkills().Add(tmp2);
-            player.GetSkills().Add(tmp3);
-
-            player.AddItem(Itmp1);
-            player.AddItem(Itmp2);
-            player.AddItem(Itmp2);
-            player.AddItem(Itmp3);
-            player.AddItem(Itmp4);
-            player.AddItem(Itmp5);
-
-            //Console.WriteLine(player.Skills.Count.ToString());
-            foreach(Skill t in player.GetSkills())
-            {
-                player.UseSkill(t);
-                player.UpgradeSkill(t);
-            }
-
-
-            player.Equip(Etmp1);
-            player.Equip(Etmp2);
-            player.Equip(Etmp3);
-            player.Equip(Etmp4); 
-            player.Equip(Etmp5); 
-
-            Console.WriteLine("玩家装备:");
-            Console.WriteLine("头部: "+player.GetHead().Name);
-            Console.WriteLine("武器: "+player.GetWeapon().Name);
-            Console.WriteLine("鞋子: "+player.GetShoe().Name);
-            Console.WriteLine("衣服: "+player.GetCloth().Name);
-            Console.WriteLine("护手: "+player.GetHandguard().Name);
-
-            while(!player.dead&&!Gooo.dead)
-            {
-                if(!player.dead)
-                {
-                    player.ATTACK(Gooo);
-                }
-                else
-                {
-                    break;
-                }
-                if(!Gooo.dead)
-                {
-                    Gooo.ATTACK(player);
-                }
-                else
-                {
-                    break;
-                }
-            }
-            Storage.CreateDirectory(dirpath); */
-
             var binder = new GameSerializationBinder();
             //Storage.SetData(fileName,player,binder);
-            Player TestPlayer = (Player)Storage.GetData(fileName,typeof(Player),binder);
-            //Player TestPlayer = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10);
+            //Player TestPlayer = (Player)Storage.GetData(fileName,typeof(Player),binder);
+            Player TestPlayer = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10,0);
+            Console.WriteLine("##############################################");
             Console.WriteLine(TestPlayer.ToString());
-            Console.WriteLine("===============");
+            Console.WriteLine("##############################################");
 
-            /* for(int i=0;i<TestPlayer.GetItems().Count;i++)
-            {
-                TestPlayer.UseItem(TestPlayer.GetItems()[i]);
-            } */
+            Dragon D = new Dragon("露西亚",SEX.Feman,24,100,100,2000,100,0,1,100,20,20,null);
+            Dragon D2 = new Dragon("伊蕾雅",SEX.Feman,40,400,400,2000,100,100,1,100,100,100,null);
+            TestPlayer.CaptureDragon(D);
+            TestPlayer.CaptureDragon(D2);
+
             AttackStrongItem Itmp2 = new AttackStrongItem("藏锋丹",TestPlayer,15,30,6);
             DefenseStrongItem Itmp3 = new DefenseStrongItem("宝象丹",TestPlayer,25,30,1);
+            WeaponEquipment S = new WeaponEquipment("新手剑",TestPlayer,25);
+            TestPlayer.AddItem(Itmp2);
             TestPlayer.AddItem(Itmp3);
+            TestPlayer.Equip(S);
+
+            SkillBook bbb = new SkillBook("剑荡八荒",TestPlayer,1,0,3,10);
+            TestPlayer.AddItem(bbb);
+            TestPlayer.UseItem(bbb);
+
             TestPlayer.UpgradeSkill(TestPlayer.GetSkills()[0]);
+
+            Console.WriteLine("##############################################");
+            Console.WriteLine(TestPlayer.ToString());
+            Console.WriteLine("##############################################");
+
             Monster Gooo = new Monster("哥布林",SEX.Man,1,8,2,50,0,0,40,10,100);
             while(!TestPlayer.dead&&!Gooo.dead)
             {
                 if(!TestPlayer.dead)
                 {
                     TestPlayer.ATTACK(Gooo,TestPlayer.GetSkills()[0]);
+                    TestPlayer.GetMyDragons()[0].ATTACK(Gooo);
                 }
                 else
                 {
@@ -124,12 +67,16 @@ namespace Test
                     break;
                 }
             }
-            //SkillBook bbb = new SkillBook("剑荡八荒",TestPlayer,1,0,3,10);
+            TestPlayer.KillMonster(Gooo);
             //TestPlayer.AddItem(bbb);
             //TestPlayer.UseItem(bbb);
             Console.WriteLine(TestPlayer.ToString());
             Console.WriteLine("===============");
-            //Storage.SetData(fileName,TestPlayer,binder);
+            Storage.SetData(fileName,TestPlayer,binder);
+            Player TestPlayer2 = (Player)Storage.GetData(fileName,typeof(Player),binder);
+            Console.WriteLine("Reload!!!!!!!!!!!!!!!!!!!!!!!!");
+            Console.WriteLine(TestPlayer2.ToString());
+
         }
     }
 }

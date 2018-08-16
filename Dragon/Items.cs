@@ -504,7 +504,7 @@ namespace Items
         }
         public Skill LearnSkill()
         {
-            Console.WriteLine(Name+SkillLevel+SkillAttack);
+            //Console.WriteLine(Name+SkillLevel+SkillAttack);
             if(SkillType == 0)
             {
                 return new PhysicalSkill(Name,SkillAttack,SkillLevel);
