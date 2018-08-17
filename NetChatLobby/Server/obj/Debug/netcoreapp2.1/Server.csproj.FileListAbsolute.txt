@@ -1,0 +1,11 @@
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\bin\Debug\netcoreapp2.1\Server.deps.json
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\bin\Debug\netcoreapp2.1\Server.runtimeconfig.json
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\bin\Debug\netcoreapp2.1\Server.runtimeconfig.dev.json
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\bin\Debug\netcoreapp2.1\Server.dll
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\bin\Debug\netcoreapp2.1\Server.pdb
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\obj\Debug\netcoreapp2.1\Server.csprojAssemblyReference.cache
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\obj\Debug\netcoreapp2.1\Server.csproj.CoreCompileInputs.cache
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\obj\Debug\netcoreapp2.1\Server.AssemblyInfoInputs.cache
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\obj\Debug\netcoreapp2.1\Server.AssemblyInfo.cs
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\obj\Debug\netcoreapp2.1\Server.dll
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Server\obj\Debug\netcoreapp2.1\Server.pdb

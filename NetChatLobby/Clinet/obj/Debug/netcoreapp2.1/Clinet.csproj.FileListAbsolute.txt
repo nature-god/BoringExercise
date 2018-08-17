@@ -1,0 +1,11 @@
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\bin\Debug\netcoreapp2.1\Clinet.deps.json
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\bin\Debug\netcoreapp2.1\Clinet.runtimeconfig.json
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\bin\Debug\netcoreapp2.1\Clinet.runtimeconfig.dev.json
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\bin\Debug\netcoreapp2.1\Clinet.dll
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\bin\Debug\netcoreapp2.1\Clinet.pdb
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\obj\Debug\netcoreapp2.1\Clinet.csprojAssemblyReference.cache
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\obj\Debug\netcoreapp2.1\Clinet.csproj.CoreCompileInputs.cache
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\obj\Debug\netcoreapp2.1\Clinet.AssemblyInfoInputs.cache
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\obj\Debug\netcoreapp2.1\Clinet.AssemblyInfo.cs
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\obj\Debug\netcoreapp2.1\Clinet.dll
+C:\Users\i343817\Desktop\Exercise\NetChatLobby\Clinet\obj\Debug\netcoreapp2.1\Clinet.pdb
