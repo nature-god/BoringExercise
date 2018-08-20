@@ -1,4 +1,5 @@
 using System;
+using PlayerClassDesign;
 
 namespace SkillClassDesign
 {
@@ -36,15 +37,38 @@ namespace SkillClassDesign
         private int attack;
         private int level;
 
+        private int cost;
+
+        public int Cost
+        {
+            get{return cost;}
+            set{cost = value;}
+        }
+
+        private int upgradeNum;
+        public int UpgradeNum
+        {
+            get{return upgradeNum;}
+            set{upgradeNum = value;}
+        }
+        private int upgradeCost;
+        public int UpgradeCost
+        {
+            get{return upgradeCost;}
+            set{upgradeCost = value;}
+        }
         public Skill()
         {
 
         }
-        public Skill(string _name,int _attack,int _level)
+        public Skill(string _name,int _attack,int _level,int _cost,int _upgradeNum,int _upgradeCost)
         {
             skillName = _name;
             attack = _attack;
             level = _level;
+            cost = _cost;
+            upgradeNum = _upgradeNum;
+            upgradeCost = _upgradeCost;
         }
 
         public string SkillName
@@ -65,7 +89,7 @@ namespace SkillClassDesign
             set{level = value;}
         }
 
-        public abstract void UseSkill();
+        public abstract void UseSkill(Role role);
         public abstract void UpgradeSkill();
     }
 

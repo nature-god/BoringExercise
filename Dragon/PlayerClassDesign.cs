@@ -33,6 +33,27 @@ namespace PlayerClassDesign
         private int dodge;
         //
         private int essence;
+        
+        
+        private int moveSpeed;
+        public int MoveSpeed
+        {
+            get{return moveSpeed;}
+            set
+            {
+                moveSpeed = value;
+                if(moveSpeed > 15)
+                {
+                    moveSpeed = 15;
+                }
+            }
+        }
+        private int physical_capacity;
+        public int Physical_Capacity
+        {
+            get{return physical_capacity;}
+            set{physical_capacity = value;}
+        }
         private int experience;
         public int Experience
         {
@@ -58,11 +79,13 @@ namespace PlayerClassDesign
         {
             skills = new List<Skill>();
         }
-        public Role(string _name,SEX _sex,int _level,int _attack,int _defense,
-                    int _life,int _magic_capacity,int _essence,int _hit,int _dodge)
+        public Role(string _name,SEX _sex,int _level,int _speed,int _attack,int _defense,
+                    int _life,int _physical_capacity,int _magic_capacity,
+                    int _essence,int _hit,int _dodge)
         {
             name = _name;
             sex = _sex;
+            physical_capacity = _physical_capacity;
             level = _level;
             attack = _attack;
             defense = _defense;
@@ -71,6 +94,7 @@ namespace PlayerClassDesign
             essence = _essence;
             hit = _hit;
             dodge = _dodge;
+            moveSpeed = _speed;
             skills = new List<Skill>();
         }
         
@@ -141,7 +165,7 @@ namespace PlayerClassDesign
         #region  Method
         public void UseSkill(Skill skill)
         {
-            skill.UseSkill();
+            skill.UseSkill(this);
         }
         public new string ToString()
         {
@@ -150,6 +174,9 @@ namespace PlayerClassDesign
                         +"\nLevel: "+Level
                         +"\nSex: "+Sex
                         +"\nLife: "+Life
+                        +"\nPhysical Capacity: "+Physical_Capacity
+                        +"\nMagical Capacity: "+Magic_capacity
+                        +"\nMove Speed: "+MoveSpeed
                         +"\nAttack: "+Attack
                         +"\nDefense: "+Defense
                         +"\nHit: "+Hit
@@ -206,19 +233,46 @@ namespace PlayerClassDesign
     [Serializable]
     class Player : Role,ISerializable
     {
+        private int life_resume;
+        public int Life_Resume
+        {
+            get{return life_resume;}
+            set{life_resume = value;}
+        }
+        private int essence_resume;
+        public int Essence_Resume
+        {
+            get{return essence_resume;}
+            set{essence_resume = value;}
+        }
+        private int magic_resume;
+        public int Magic_Resume
+        {
+            get{return magic_resume;}
+            set{magic_resume = value;}
+        }
+        private int physical_resume;
+        public int Physical_Resume
+        {
+            get{return physical_resume;}
+            set{physical_resume = value;}
+        }
+
         public Player()
         {
             
         }
         public Player(string _name,SEX _sex,
-                        int _level,int _attack,
+                        int _level,int _speed,int _attack,
                         int _defense,int _life,
+                        int _physical_capacity,
                         int _magic_capacity,
                         int _essence,
                         int _hit,
                         int _dodge,
-                        int _experience):
-        base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence,_hit,_dodge)
+                        int _experience,
+                         int _life_resume,int _magic_resume,int _physic_resume,int _essence_resume):
+        base(_name,_sex,_level,_speed,_attack,_defense,_life,_physical_capacity,_magic_capacity,_essence,_hit,_dodge)
         {
             head = new HeadEquipment();
             handguard = new HandguardEquipment();
@@ -227,6 +281,10 @@ namespace PlayerClassDesign
             weapon = new WeaponEquipment();
             items = new List<Item>();
             Experience = _experience;
+            Life_Resume = _life_resume;
+            Magic_Resume = _magic_resume;
+            physical_resume = _physic_resume;
+            Essence_Resume = _essence_resume;
         }
 
         protected Player(SerializationInfo info,StreamingContext context)
@@ -242,6 +300,13 @@ namespace PlayerClassDesign
                 Dodge = info.GetInt16("Dodge");
                 Essence = info.GetInt16("Essence");
                 Experience = info.GetInt16("Experience");
+                MoveSpeed = info.GetInt16("Speed");
+                Physical_Capacity = info.GetInt16("Physical_Capacity");
+                Magic_capacity = info.GetInt16("Magical_Capacity");
+                Life_Resume = info.GetInt16("Life_Resume");
+                Essence_Resume = info.GetInt16("Essence_Resume");
+                Physical_Resume = info.GetInt16("Physical_Resume");
+                Magic_Resume = info.GetInt16("Magical_Resume");
 
                 head = new HeadEquipment();
                 handguard = new HandguardEquipment();
@@ -450,11 +515,14 @@ namespace PlayerClassDesign
             info.AddValue("Sex",Sex,typeof(SEX));
             info.AddValue("Level",Level,typeof(int));
             info.AddValue("Life",Life,typeof(int));
+            info.AddValue("Speed",MoveSpeed,typeof(int));
             info.AddValue("Attack",Attack,typeof(int));
             info.AddValue("Defense",Defense,typeof(int));
             info.AddValue("Hit",Hit,typeof(int));
             info.AddValue("Dodge",Dodge,typeof(int));
             info.AddValue("Essence",Essence,typeof(int));
+            info.AddValue("Physical_Capacity",Physical_Capacity,typeof(int));
+            info.AddValue("Magical_Capacity",Magic_capacity,typeof(int));
             info.AddValue("Items",GetItems(),typeof(List<Item>));
             info.AddValue("Skills",GetSkills(),typeof(List<Skill>));
             info.AddValue("HeadEquipment",GetHead(),typeof(HeadEquipment));
@@ -464,6 +532,10 @@ namespace PlayerClassDesign
             info.AddValue("WeaponEquipment",GetWeapon(),typeof(WeaponEquipment));
             info.AddValue("Dragons",MyDragons,typeof(List<Dragon>));
             info.AddValue("Experience",Experience,typeof(int));
+            info.AddValue("Life_Resume",Life_Resume,typeof(int));
+            info.AddValue("Essence_Resume",Essence_Resume,typeof(int));
+            info.AddValue("Physical_Resume",Physical_Resume,typeof(int));
+            info.AddValue("Magical_Resume",Magic_Resume,typeof(int));
         }
         public void CaptureDragon(Dragon d)
         {
@@ -487,8 +559,9 @@ namespace PlayerClassDesign
             master = tmp;
         }
         public Dragon(string _name,SEX _sex,
-                        int _level,int _attack,
+                        int _level,int _speed,int _attack,
                         int _defense,int _life,
+                        int _physical_capacity,
                         int _magic_capacity,
                         int _essence,
                         int _dragonType,
@@ -496,7 +569,7 @@ namespace PlayerClassDesign
                         int _hit,
                         int _dodge,
                         Role _master):
-        base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence,_hit,_dodge)
+        base(_name,_sex,_level,_speed,_attack,_defense,_life,_physical_capacity,_magic_capacity,_essence,_hit,_dodge)
         {
             dragonType = _dragonType;
             loyalty = _loyalty;
@@ -513,6 +586,9 @@ namespace PlayerClassDesign
                 Dodge = info.GetInt16("Dodge");
                 Essence = info.GetInt16("Essence");
                 Loyalty = info.GetInt16("Loyalty");
+                MoveSpeed = info.GetInt16("Speed");
+                Physical_Capacity = info.GetInt16("Physical_Capacity");
+                Magic_capacity = info.GetInt16("Magical_Capacity");
                 SetSkills((IList<Skill>)info.GetValue("Skills",typeof(List<Skill>)));
         }
         public void GetObjectData(SerializationInfo info,StreamingContext context)
@@ -520,6 +596,7 @@ namespace PlayerClassDesign
             info.AddValue("Name",Name,typeof(String));
             info.AddValue("Sex",Sex,typeof(SEX));
             info.AddValue("Level",Level,typeof(int));
+            info.AddValue("Speed",MoveSpeed,typeof(int));
             info.AddValue("Life",Life,typeof(int));
             info.AddValue("Attack",Attack,typeof(int));
             info.AddValue("Defense",Defense,typeof(int));
@@ -527,6 +604,8 @@ namespace PlayerClassDesign
             info.AddValue("Dodge",Dodge,typeof(int));
             info.AddValue("Essence",Essence,typeof(int));
             info.AddValue("Loyalty",Loyalty,typeof(int));
+            info.AddValue("Physical_Capacity",Physical_Capacity,typeof(int));
+            info.AddValue("Magical_Capacity",Magic_capacity,typeof(int));
             info.AddValue("Skills",GetSkills(),typeof(List<Skill>));
         }
 
@@ -560,7 +639,10 @@ namespace PlayerClassDesign
             string tmp = "\n    Name: "+Name
                         +"\n    Level: "+Level
                         +"\n    Sex: "+Sex
+                        +"\n    Move Speed: "+MoveSpeed
                         +"\n    Life: "+Life
+                        +"\n    Physical_Capacity: "+Physical_Capacity
+                        +"\n    Magical_Capacity: "+Magic_capacity
                         +"\n    Attack: "+Attack
                         +"\n    Defense: "+Defense;
             return tmp;
@@ -574,14 +656,15 @@ namespace PlayerClassDesign
             get{return exercise;}
         }
         public Monster(string _name,SEX _sex,
-                        int _level,int _attack,
+                        int _level,int _speed,int _attack,
                         int _defense,int _life,
+                        int _physical_capacity,
                         int _magic_capacity,
                         int _essence,
                         int _hit,
                         int _dodge,
                         int _exercise):
-        base(_name,_sex,_level,_attack,_defense,_life,_magic_capacity,_essence,_hit,_dodge)
+        base(_name,_sex,_level,_level,_attack,_defense,_life,_physical_capacity,_magic_capacity,_essence,_hit,_dodge)
         {
             exercise = _exercise;
         }

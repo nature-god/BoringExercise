@@ -19,13 +19,13 @@ namespace Test
             var binder = new GameSerializationBinder();
             //Storage.SetData(fileName,player,binder);
             //Player TestPlayer = (Player)Storage.GetData(fileName,typeof(Player),binder);
-            Player TestPlayer = new Player("Nature",SEX.Man,1,10,10,100,10,100,15,10,0);
+            Player TestPlayer = new Player("Nature",SEX.Man,1,5,10,10,100,100,100,100,10,10,0,5,5,5,5);
             Console.WriteLine("##############################################");
             Console.WriteLine(TestPlayer.ToString());
             Console.WriteLine("##############################################");
 
-            Dragon D = new Dragon("露西亚",SEX.Feman,24,100,100,2000,100,0,1,100,20,20,null);
-            Dragon D2 = new Dragon("伊蕾雅",SEX.Feman,40,400,400,2000,100,100,1,100,100,100,null);
+            Dragon D = new Dragon("露西亚",SEX.Feman,24,15,100,100,2000,200,100,0,1,100,20,20,null);
+            Dragon D2 = new Dragon("伊蕾雅",SEX.Feman,40,15,400,400,2000,200,100,100,1,100,100,100,null);
             TestPlayer.CaptureDragon(D);
             TestPlayer.CaptureDragon(D2);
 
@@ -46,7 +46,7 @@ namespace Test
             Console.WriteLine(TestPlayer.ToString());
             Console.WriteLine("##############################################");
 
-            Monster Gooo = new Monster("哥布林",SEX.Man,1,8,2,50,0,0,40,10,100);
+            Monster Gooo = new Monster("哥布林",SEX.Man,1,10,8,2,50,0,100,0,40,10,100);
             while(!TestPlayer.dead&&!Gooo.dead)
             {
                 if(!TestPlayer.dead)

@@ -484,6 +484,24 @@ namespace Items
 
     public class SkillBook : Item,ISerializable
     {
+        private int cost;
+        private int upgradeCost;
+        private int upgradeNum;
+        public int Cost
+        {
+            get{return cost;}
+            set{cost = value;}
+        }
+        public int UpgradeCost
+        {
+            get{return upgradeCost;}
+            set{upgradeCost = value;}
+        }
+        public int UpgradeNum
+        {
+            get{return upgradeNum;}
+            set{upgradeNum = value;}
+        }
         private int skillType;
         public int SkillType
         {
@@ -507,15 +525,15 @@ namespace Items
             //Console.WriteLine(Name+SkillLevel+SkillAttack);
             if(SkillType == 0)
             {
-                return new PhysicalSkill(Name,SkillAttack,SkillLevel);
+                return new PhysicalSkill(Name,SkillAttack,SkillLevel,Cost,UpgradeNum,UpgradeCost);
             }
             else if(SkillType == 1)
             {
-                return new MagicalSkill(Name,SkillAttack,SkillLevel);
+                return new MagicalSkill(Name,SkillAttack,SkillLevel,Cost,UpgradeNum,UpgradeCost);
             }
             else
             {
-                return new PhysicalSkill(Name,SkillAttack,SkillLevel);
+                return new PhysicalSkill(Name,SkillAttack,SkillLevel,Cost,UpgradeNum,UpgradeCost);
             }
         }
         protected SkillBook(SerializationInfo info,StreamingContext context)
@@ -525,6 +543,9 @@ namespace Items
             SkillType = info.GetInt16("SkillType");
             SkillLevel = info.GetInt16("SkillLevel");
             SkillAttack = info.GetInt16("SkillAttack");
+            UpgradeCost = info.GetInt16("UpgradeCost");
+            UpgradeNum = info.GetInt16("UpgradeNum");
+            Cost = info.GetInt16("Cost");
         }
         public void GetObjectData(SerializationInfo info,StreamingContext context)
         {
@@ -534,6 +555,9 @@ namespace Items
             info.AddValue("SkillLevel",SkillLevel,typeof(int));
             info.AddValue("SkillAttack",SkillAttack,typeof(int));
             info.AddValue("Num",Num,typeof(int));
+            info.AddValue("UpgradeNum",UpgradeNum,typeof(int));
+            info.AddValue("UpgradeCost",UpgradeCost,typeof(int));
+            info.AddValue("Cost",Cost,typeof(int));
         }
         
         public SkillBook(string _name,Role _Role,int _num,int _skillType,int _skillLevel,int _skillAttack):base(_name,_Role,_num)

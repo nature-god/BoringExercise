@@ -1,5 +1,6 @@
 //#undef DEBUG
 using System;
+using PlayerClassDesign;
 using SkillClassDesign;
 using System.Runtime.Serialization;
 
@@ -12,8 +13,12 @@ namespace  Skills
             SkillName = info.GetString("SkillName");
             Level = info.GetInt16("SkillLevel");
             Attack = info.GetInt16("SkillAttack");
+            UpgradeCost = info.GetInt16("UpgradeCost");
+            UpgradeNum = info.GetInt16("UpgradeNum");
+            Cost = info.GetInt16("Cost");
         }
-        public PhysicalSkill(string _name,int _attack,int _level):base(_name,_attack,_level)
+        public PhysicalSkill(string _name,int _attack,int _level,int _cost,int _upgradeNum,int _upgradeCost):
+                                base(_name,_attack,_level,_cost,_upgradeNum,_upgradeCost)
         {
             //Console.WriteLine("PhysicalSkill_01======");
         }
@@ -22,11 +27,15 @@ namespace  Skills
             info.AddValue("SkillName",SkillName,typeof(string));
             info.AddValue("SkillLevel",Level,typeof(int));
             info.AddValue("SkillAttack",Attack,typeof(int));
+            info.AddValue("UpgradeNum",UpgradeNum,typeof(int));
+            info.AddValue("UpgradeCost",UpgradeCost,typeof(int));
+            info.AddValue("Cost",Cost,typeof(int));
         }
 
         //Use the physical skill
-        public override void UseSkill()
+        public override void UseSkill(Role role)
         {
+            role.Physical_Capacity -= Cost;
             UsePhsical();
         }
         public override void UpgradeSkill()
@@ -43,7 +52,8 @@ namespace  Skills
         //Upgrade the physical skill
         public void UpgradePhysical()
         {
-            Attack += 5;
+            Attack += UpgradeNum;
+            Cost += UpgradeCost;
             #if DEBUG
                 Console.WriteLine("================");
                 Console.WriteLine(PhysicalDescription()+ SkillName + "升级: " + (Attack-5)+" => "+Attack);
@@ -63,8 +73,12 @@ namespace  Skills
             SkillName = info.GetString("SkillName");
             Level = info.GetInt16("SkillLevel");
             Attack = info.GetInt16("SkillAttack");
+            UpgradeCost = info.GetInt16("UpgradeCost");
+            UpgradeNum = info.GetInt16("UpgradeNum");
+            Cost = info.GetInt16("Cost");
         }
-        public MagicalSkill(string _name,int _attack,int _level):base(_name,_attack,_level)
+        public MagicalSkill(string _name,int _attack,int _level,int _cost,int _upgradeNum,int _upgradeCost):
+                            base(_name,_attack,_level,_cost,_upgradeNum,_upgradeCost)
         {
             //Console.WriteLine("PhysicalSkill_01======");
         }
@@ -73,10 +87,14 @@ namespace  Skills
             info.AddValue("SkillName",SkillName,typeof(string));
             info.AddValue("SkillLevel",Level,typeof(int));
             info.AddValue("SkillAttack",Attack,typeof(int));
+            info.AddValue("UpgradeNum",UpgradeNum,typeof(int));
+            info.AddValue("UpgradeCost",UpgradeCost,typeof(int));
+            info.AddValue("Cost",Cost,typeof(int));
         }
         //Use the physical skill
-        public override void UseSkill()
+        public override void UseSkill(Role role)
         {
+            role.Magic_capacity -= Cost;
             UseMagic();
         }
         public override void UpgradeSkill()
@@ -93,7 +111,8 @@ namespace  Skills
         //Upgrade the physical skill
         public void UpgradeMagic()
         {
-            Attack += 5;
+            Attack += UpgradeNum;
+            Cost += UpgradeCost;
             #if DEBUG
                 Console.WriteLine("================");
                 Console.WriteLine(MagicDescription()+ SkillName + "升级: " + (Attack-5)+" => "+Attack);
